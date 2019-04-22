@@ -23,7 +23,10 @@ defmodule Blog.Posts.Post do
   end
 
   defp add_slug(changeset) do
-    title = get_change(changeset, :title)
-    put_change(changeset, :slug, Slugger.slugify_downcase(title))
+    if title = get_change(changeset, :title) do
+      put_change(changeset, :slug, Slugger.slugify_downcase(title))
+    else
+      changeset
+    end
   end
 end
