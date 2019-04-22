@@ -1,23 +1,15 @@
-<h1>Show Post</h1>
+<h1 class="page-heading">
+  <%= @post.title %> 
+</h1>
 
-<ul>
+<div class="center-text">
+  <%= NaiveDateTime.to_date @post.inserted_at %>
+</div>
+<hr>
+<div class="post-body">
+  <%= @post.body %>
+</div>
 
-  <li>
-    <strong>Title:</strong>
-    <%= @post.title %>
-  </li>
-
-  <li>
-    <strong>Body:</strong>
-    <%= @post.body %>
-  </li>
-
-  <li>
-    <strong>Slug:</strong>
-    <%= @post.slug %>
-  </li>
-
-</ul>
-
-<span><%= link "Edit", to: Routes.post_path(@conn, :edit, @post) %></span>
-<span><%= link "Back", to: Routes.post_path(@conn, :index) %></span>
+<div class="nav-buttons">
+  <%= link "Back", to: Routes.post_path(@conn, :index), class: "pure-button pure-button-primary" %>
+</div>

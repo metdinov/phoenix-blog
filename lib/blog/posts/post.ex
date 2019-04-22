@@ -1,6 +1,7 @@
 defmodule Blog.Posts.Post do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Blog.Repo
   alias Blog.Posts.Category
 
   schema "posts" do
@@ -14,12 +15,31 @@ defmodule Blog.Posts.Post do
   end
 
   @doc false
-  def changeset(post, attrs) do
+  def changeset(post, params \\ %{}) do
     post
-    |> cast(attrs, [:title, :body, :slug])
+    |> cast(params, [:title, :body])
     |> validate_required([:title, :body])
+    |> put_assoc(:categories, parse_categories(params))
     |> add_slug()
     |> unique_constraint(:slug)
+  end
+
+  defp parse_categories(params)  do
+    params
+    |> Map.get("categories", "")
+    |> String.split(" ")
+    |> Enum.map(&String.trim/1)
+    |> Enum.reject(&(&1 == ""))
+    |> Enum.map(&get_or_insert_category/1)
+  end
+
+  defp get_or_insert_category(name) do
+    Repo.get_by(Category, name: name) || insert_category(name)
+  end
+
+  defp insert_category(name) do
+    changeset = Category.changeset(%Category{}, %{name: name})
+    Repo.insert!(changeset)  
   end
 
   defp add_slug(changeset) do
