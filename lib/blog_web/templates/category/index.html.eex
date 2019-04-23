@@ -1,0 +1,15 @@
+<h1>Categories</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for category <- @categories do %>
+    <tr>
+        <td><%= link category.name , to: Routes.category_path(@conn, :show, category) %></td> 
+    </tr>
+<% end %>
+  </tbody>
+</table>

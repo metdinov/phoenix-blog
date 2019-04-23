@@ -102,6 +102,22 @@ defmodule Blog.Posts do
     Category.changeset(category, %{})
   end
 
+  @doc """
+  Returns the list of posts for a given category.
+
+  ## Examples
+
+      iex> get_category_posts!(id)
+      [%Post{}, ...]
+
+  """
+  def get_category_posts!(id) do
+    id
+    |> get_category!()
+    |> Ecto.assoc(:posts)
+    |> Repo.all()
+  end
+
   alias Blog.Posts.Post
 
   @doc """

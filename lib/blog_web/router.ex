@@ -22,10 +22,8 @@ defmodule BlogWeb.Router do
     pipe_through :browser
 
     resources "/posts", PostController
+    resources "/categories", CategoryController, only: [:index, :show]
 
-    get "/categories", CategoriesController, :index
     get "/", PostController, :index
-    
   end
-
 end

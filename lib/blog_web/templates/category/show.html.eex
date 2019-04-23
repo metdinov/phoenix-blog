@@ -1,0 +1,24 @@
+<h1 class="page-heading">
+  <%= @category.name %> 
+</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for post <- @posts do %>
+    <tr>
+      <td><%= link post.title , to: Routes.post_path(@conn, :show, post) %></td>
+      <td><%= NaiveDateTime.to_date post.inserted_at %></td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<div class="nav-buttons">
+  <%= link "Back", to: Routes.category_path(@conn, :index), class: "pure-button pure-button-primary" %>
+</div>
