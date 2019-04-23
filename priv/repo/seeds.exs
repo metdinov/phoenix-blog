@@ -13,7 +13,6 @@
 alias Blog.Repo
 alias Blog.Posts.Post
 
-
 # Seed posts
 posts = [
   {"Crypto maxims", "Never roll your own crypto.", "crypto"},
@@ -24,6 +23,8 @@ posts = [
 ]
 
 for {title, body, category} <- posts do
-  changeset = Post.changeset(%Post{title: title, body: body}, %{"categories" => category})
+  changeset =
+    Post.changeset(%Post{}, %{"title" => title, "body" => body, "categories" => category})
+
   Repo.insert!(changeset)
 end
